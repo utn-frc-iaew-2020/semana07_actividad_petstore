@@ -1,0 +1,236 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+  license:
+    name: MIT
+servers:
+  - url: 'http://localhost:5000/v1'
+  - url: 'http://localhost:5000/v2'
+paths:
+  /pets:
+    get:
+      summary: Listar todos los articulos
+      operationId: listPets
+      tags:
+        - pets
+      parameters:
+        - name: name
+          in: query
+          description: item name
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A paged array of pets
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pets'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Crear un articulo
+      operationId: createPets
+      tags:
+        - pets
+      requestBody:
+        description: Cuerpo
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/pets/{petId}':
+    get:
+      summary: Obtener un articulo especifico.
+      operationId: showPetById
+      tags:
+        - pets
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          description: The id of the pet to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Actualizar un articulo especifico.
+      operationId: updatePetById
+      tags:
+        - pets
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          description: The id of the pet to retrieve
+          schema:
+            type: string
+      requestBody:
+        description: Cuerpo
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      summary: Actualizar parcialmente un articulo especifico.
+      operationId: patchPetById
+      tags:
+        - pets
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          description: The id of the pet to retrieve
+          schema:
+            type: string
+      requestBody:
+        description: JsonPatch
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchRequest'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: Eliminar un articulo especifico.
+      operationId: deletePetById
+      tags:
+        - pets
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          description: The id of the pet to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Pet:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        tag:
+          type: string
+    Pets:
+      type: array
+      items:
+        $ref: '#/components/schemas/Pet'
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    PatchRequest:
+      type: array
+      items:
+        $ref: "#/components/schemas/PatchDocument"
+    PatchDocument: 
+      description: A JSONPatch document as defined by RFC 6902 
+      required:
+       - "op"
+       - "path"
+      properties: 
+       op: 
+        type: string 
+        description: The operation to be performed 
+        enum:
+         - "add"
+         - "remove"
+         - "replace"
+         - "move"
+         - "copy"
+         - "test"
+       path: 
+        type: string 
+        description: A JSON-Pointer 
+       value: 
+        type: object 
+        description: The value to be used within the operations.
+       from: 
+        type: string 
+        description: A string containing a JSON Pointer value.
