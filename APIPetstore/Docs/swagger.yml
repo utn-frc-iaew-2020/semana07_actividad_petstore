@@ -2,11 +2,13 @@ openapi: 3.0.0
 info:
   version: 1.0.0
   title: Swagger Petstore
+  description: teseta
   license:
     name: MIT
 servers:
   - url: 'http://localhost:5000/v1'
-  - url: 'http://localhost:5000/v2'
+  - url: 'http://staging.example.com/v1'
+  - url: 'http://production.example.com/v1'
 paths:
   /pets:
     get:
@@ -53,7 +55,11 @@ paths:
               $ref: '#/components/schemas/Pet'
       responses:
         '201':
-          description: Null response
+         description: Null response
+         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
         default:
           description: unexpected error
           content:
@@ -163,12 +169,8 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        '204':
           description: Expected response to a valid request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pet'
         default:
           description: unexpected error
           content:
