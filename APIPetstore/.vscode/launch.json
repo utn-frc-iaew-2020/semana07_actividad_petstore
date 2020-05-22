@@ -20,7 +20,10 @@
                 "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"
             },
             "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "AWS_ACCESS_KEY_ID": "ASIA2KXO2334AKBLUHH7",
+                "AWS_SECRET_ACCESS_KEY": "+Iq2Pjl7dcJ9Trxr62zPfb2ESUNogMoUp7q879dg",
+                "AWS_SESSION_TOKEN":"FwoGZXIvYXdzEAUaDFsSfi44TFkLGvTjkCLFAS7qZfYG7ht9X52bSl5KCJ5zvkBKbo9UcwoDBF5dwgN/VtIKEomuc7on9Qga/3e8BqF1jmdT6+gJP56OxxuljF9NHO5AiCJ2soZL63ymTn895gJV+Hij2Nbx8V7afxOrpHKT7DobRTsBi1sFLRxvVovCHkWyFcOFmt/bCK9xnkEmSvbBKxNoJOLGCzNdqNv5SEfC8toS8H0IJv9zTZXewJjJw1+hHFCIQNqEZTrCAeT0jMk0KsskVQ3PAFjwlaobXIZhgsrEKMy36PUFMi252F/t2cm6n2fsyJHc6iYkMUvECaxdwGv9WxUdr/yOtMemLcT5shqo3+X8MLs="
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
